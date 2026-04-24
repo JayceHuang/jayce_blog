@@ -1,13 +1,17 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #071423;
+  --foreground: #f3f6fb;
+  --text-primary: #f3f6fb;
+  --text-gold: #f1deab;
+  --text-muted: rgba(198, 210, 228, 0.72);
+  --font-body:
+    "Avenir Next", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC",
+    "Helvetica Neue", sans-serif;
+  --font-display:
+    "Baskerville", "Iowan Old Style", "Palatino Linotype", "Times New Roman",
+    serif;
+  --font-serif-cn:
+    "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
 }
 
 html {
@@ -26,7 +30,7 @@ body {
   flex-direction: column;
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -42,8 +46,6 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+body::selection {
+  background: rgba(241, 222, 171, 0.3);
 }
