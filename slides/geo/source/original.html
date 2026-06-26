@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 时代的搜索</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FAF9F6;--ink:#1a1c2e;--ink2:#6b7084;--accent:#b8432f;--accent2:#0c6b5f;--rule:#d8d5ce;--dark:#1a1c2e;--dark2:#2a2c3e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
+.slide{display:none;width:100vw;height:100vh;position:relative;flex-direction:column}
+.slide.active{display:flex}
+.pn{position:fixed;bottom:32px;right:48px;font-size:14px;color:var(--ink2);z-index:100;font-family:'Instrument Serif',serif;font-style:italic}
+.pb{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .4s ease;z-index:200}
+
+/* Cover */
+.cover{justify-content:center;padding:80px 120px}
+.kicker{font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:700;margin-bottom:28px}
+.kicker::before{content:'';display:inline-block;width:28px;height:2px;margin-right:10px;vertical-align:middle}
+.kicker-r{color:var(--accent)}.kicker-r::before{background:var(--accent)}
+.kicker-g{color:var(--accent2)}.kicker-g::before{background:var(--accent2)}
+.kicker-d{color:var(--ink2)}.kicker-d::before{background:var(--ink2)}
+h1{font-family:'Noto Serif SC',serif;font-weight:900;font-size:64px;line-height:1.15;letter-spacing:-2px;margin-bottom:20px}
+h1 em{font-style:normal;color:var(--accent)}
+h1 b{font-style:normal;color:var(--accent2)}
+.sub{font-family:'Instrument Serif',serif;font-style:italic;font-size:24px;color:var(--ink2);margin-bottom:32px}
+.stats{display:flex;gap:48px}
+.stat{text-align:left}
+.stat-num{font-family:'Noto Serif SC',serif;font-weight:900;font-size:48px;letter-spacing:-2px}
+.stat-label{font-size:15px;color:var(--ink2);margin-top:4px}
+.stat-src{font-size:11px;color:var(--rule);margin-top:2px}
+
+/* Content */
+.ct{padding:80px 120px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1;min-height:0;align-items:center}
+.split3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;flex:1;min-height:0}
+.split4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px;flex:1;min-height:0}
+
+/* Metrics */
+.mn{font-family:'Noto Serif SC',serif;font-weight:900;font-size:52px;letter-spacing:-2px}
+.mn-sm{font-size:40px}
+.ml{font-size:16px;color:var(--ink2);margin-top:6px;line-height:1.5}
+.mr{color:var(--accent)}.mg{color:var(--accent2)}
+
+/* Cards */
+.card{background:#fff;padding:32px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card-top{border-top:3px solid}
+.card h3{font-family:'Noto Serif SC',serif;font-weight:700;font-size:28px;margin-bottom:8px}
+.card p{font-size:18px;color:var(--ink2);line-height:1.6}
+
+/* Case image */
+.case-img{border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.08);max-width:100%;max-height:100%;object-fit:contain}
+
+/* Verdict */
+.verdict{background:rgba(12,107,95,.05);padding:20px 28px;font-size:19px;line-height:1.6}
+.verdict strong{color:var(--accent2)}
+.verdict-r{background:rgba(184,67,47,.05)}
+.verdict-r strong{color:var(--accent)}
+
+/* Items */
+.item{display:flex;align-items:flex-start;gap:20px;margin-bottom:24px}
+.item-n{width:40px;height:40px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.item-t{font-size:22px;font-weight:700;margin-bottom:4px}
+.item-d{font-size:18px;color:var(--ink2);line-height:1.5}
+
+/* Table */
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:18px}
+th{text-align:left;padding:12px 16px;color:var(--ink2);font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid #eee}
+tr:last-child td{border-bottom:none}
+.thl td{background:rgba(12,107,95,.04)}
+
+/* Quote page */
+.quote{justify-content:center;align-items:center;text-align:center;padding:80px 160px}
+.quote h1{font-size:56px;max-width:800px;line-height:1.3}
+
+/* Divider */
+.divider{justify-content:center;align-items:center;text-align:center;padding:80px 120px;background:var(--dark);color:#fff}
+.divider h1{color:#fff;font-size:56px}
+.divider .sub{color:rgba(255,255,255,.5)}
+.divider .card{background:var(--dark2);color:#fff;border:1px solid rgba(255,255,255,.08)}
+.divider .card p{color:rgba(255,255,255,.6)}
+
+/* Bar */
+.bar{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.bar-l{width:140px;font-size:18px;text-align:right;color:var(--ink2);flex-shrink:0;font-weight:600}
+.bar-t{flex:1;height:44px;background:#eee;border-radius:4px;overflow:hidden}
+.bar-f{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:14px;font-size:16px;font-weight:700;color:#fff}
+
+/* Footer */
+.ft{display:none}
+.fs{position:absolute;bottom:32px;left:120px;font-size:12px;color:var(--ink2);letter-spacing:1px;opacity:.4}
+.cf{position:absolute;bottom:32px;left:120px;font-size:13px;color:var(--ink2);opacity:.4}
+
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide.active>*{animation:fi .5s ease forwards}
+</style>
+</head>
+<body>
+<div class="pb" id="pb"></div>
+<div class="pn" id="pn"></div>
+
+<!-- 1: Cover -->
+<div class="slide cover" id="s1">
+<div class="kicker kicker-r">SEO & GEO</div>
+<h1>6 亿人在问 AI<br>AI <em>认不认识你</em>？</h1>
+<div class="sub">国内做 GEO，海外做 SEO+GEO</div>
+<div class="stats">
+<div class="stat"><div class="stat-num mr">6 亿</div><div class="stat-label">中国 AI 用户</div><div class="stat-src">CNNIC 2025.12</div></div>
+<div class="stat"><div class="stat-num">9 亿</div><div class="stat-label">ChatGPT 周活</div><div class="stat-src">TechCrunch 2026.2</div></div>
+<div class="stat"><div class="stat-num mg">60%</div><div class="stat-label">Google 搜索零点击</div><div class="stat-src">SparkToro 2024</div></div>
+</div>
+<div class="cf">2026.05.24</div>
+</div>
+
+<!-- 2: SEO 和 GEO 是什么 -->
+<div class="slide ct" id="s2">
+<div class="kicker kicker-d">先说两个概念</div>
+<h1>SEO 和 GEO 是什么？</h1>
+<div class="split" style="margin-top:48px;">
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:56px;letter-spacing:-2px;">SEO</div>
+<div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--ink2);margin-top:8px;">Search Engine Optimization</div>
+<div style="font-size:22px;margin-top:24px;line-height:1.6;">客户在 <strong>Google / 百度</strong> 搜你时<br>你排在第几</div>
+<div style="font-size:18px;color:var(--ink2);margin-top:16px;">排第一有生意，排第十没人看</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:56px;letter-spacing:-2px;color:var(--accent);">GEO</div>
+<div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:var(--ink2);margin-top:8px;">Generative Engine Optimization</div>
+<div style="font-size:22px;margin-top:24px;line-height:1.6;">客户问 <strong style="color:var(--accent);">AI</strong> "哪家好"时<br>AI 会不会提到你</div>
+<div style="font-size:18px;color:var(--ink2);margin-top:16px;">AI 不提你 = 客户被推荐给竞品</div>
+</div>
+</div>
+</div>
+
+<!-- 2b: 开场 -->
+<div class="slide quote" id="s2b">
+<div class="kicker kicker-d">开场</div>
+<h1>你的品牌<br>AI <em>认识</em>吗？</h1>
+<div class="sub">在豆包里搜你的品牌名，看看 AI 怎么回答</div>
+</div>
+
+<!-- 3: GEO 三要素 -->
+<div class="slide cover" id="s3">
+<div class="kicker kicker-g">国内 GEO</div>
+<h1>AI 怎么决定<b>推荐谁</b>？</h1>
+<div class="sub">三个因素</div>
+<div class="split3" style="max-width:800px;margin-top:24px;">
+<div class="card card-top" style="border-color:var(--accent);text-align:center;">
+<h3>数量</h3><p>多少地方提到你</p>
+</div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:center;">
+<h3>权威</h3><p>提到你的地方<br>权不权威</p>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:center;">
+<h3>一致</h3><p>各处说的<br>是不是同一个故事</p>
+</div>
+</div>
+</div>
+
+<!-- 3b: 国内 AI 用户规模 -->
+<div class="slide ct" id="s3b">
+<div class="kicker kicker-g">国内 AI 搜索</div>
+<h1>你的客户在用这些 AI</h1>
+<div class="sub">MAU 月活跃用户 · QuestMobile 2026 Q1</div>
+<div style="display:flex;gap:40px;margin-top:32px;align-items:flex-end;">
+<!-- 视觉主角：豆包 -->
+<div style="text-align:center;flex:1.2;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:80px;letter-spacing:-3px;color:var(--accent2);line-height:1;">3.45</div>
+<div style="font-size:22px;color:var(--accent2);font-weight:700;margin-top:4px;">亿</div>
+<div style="font-size:20px;font-weight:700;margin-top:16px;">豆包</div>
+<div style="font-size:14px;color:var(--ink2);">字节跳动</div>
+</div>
+<!-- 第二梯队 -->
+<div style="text-align:center;flex:1;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:56px;letter-spacing:-2px;color:var(--accent);line-height:1;">1.66</div>
+<div style="font-size:18px;color:var(--accent);font-weight:700;margin-top:4px;">亿</div>
+<div style="font-size:18px;font-weight:700;margin-top:12px;">通义千问</div>
+<div style="font-size:14px;color:var(--ink2);">阿里</div>
+</div>
+<div style="text-align:center;flex:1;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:56px;letter-spacing:-2px;line-height:1;">1.27</div>
+<div style="font-size:18px;font-weight:700;margin-top:4px;">亿</div>
+<div style="font-size:18px;font-weight:700;margin-top:12px;">DeepSeek</div>
+</div>
+<div style="text-align:center;flex:1;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:56px;letter-spacing:-2px;color:var(--ink2);line-height:1;">1.14</div>
+<div style="font-size:18px;color:var(--ink2);font-weight:700;margin-top:4px;">亿</div>
+<div style="font-size:18px;font-weight:700;margin-top:12px;">腾讯元宝</div>
+</div>
+<!-- 第三梯队 -->
+<div style="text-align:center;flex:.7;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:36px;color:var(--ink2);line-height:1;">5000万</div>
+<div style="font-size:16px;font-weight:600;margin-top:12px;color:var(--ink2);">文心助手</div>
+</div>
+<div style="text-align:center;flex:.5;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:36px;color:var(--rule);line-height:1;">900万</div>
+<div style="font-size:16px;font-weight:600;margin-top:12px;color:var(--ink2);">Kimi</div>
+</div>
+</div>
+</div>
+
+<!-- 4: 围墙花园 -->
+<div class="slide ct" id="s4">
+<div class="kicker kicker-g">国内 GEO</div>
+<h1>围墙花园</h1>
+<div class="sub">每个 AI 只看自己生态的内容</div>
+<table style="max-width:800px;">
+<tr><th>AI 平台</th><th>优先看</th><th>要铺什么</th></tr>
+<tr class="thl"><td><strong>豆包</strong></td><td>字节系</td><td>头条号 / 今日头条</td></tr>
+<tr><td><strong>文心一言</strong></td><td>百度系</td><td>百家号 / CSDN</td></tr>
+<tr class="thl"><td><strong>DeepSeek / Kimi</strong></td><td>高质量社区</td><td>知乎 / 博客园</td></tr>
+<tr><td><strong>通义千问</strong></td><td>门户媒体</td><td>搜狐号 / 网易号</td></tr>
+<tr><td><strong>元宝</strong></td><td>腾讯系</td><td>微信公众号</td></tr>
+</table>
+<div class="verdict" style="max-width:800px;margin-top:24px;">
+<strong>取舍：</strong>不是每个平台都铺。先看你的客户用哪个 AI，针对性铺对应平台。
+</div>
+<div class="ft"></div><div class="fs">国内 GEO</div>
+</div>
+
+<!-- 5: 截图对比 -->
+<div class="slide ct" id="s5">
+<div class="kicker kicker-g">国内 GEO</div>
+<h1>同一个问题，不同 AI 给<em>完全不同</em>的答案</h1>
+<div class="sub">搜"广州隆鼻医生推荐"</div>
+<div class="split">
+<div style="text-align:center;"><img src="screenshots/广州隆鼻医生-deepseek.png" class="case-img" style="max-height:58vh;"><p style="font-size:15px;color:var(--ink2);margin-top:12px;">DeepSeek</p></div>
+<div style="text-align:center;"><img src="screenshots/广州隆鼻医生-豆包.png" class="case-img" style="max-height:58vh;"><p style="font-size:15px;color:var(--ink2);margin-top:12px;">豆包</p></div>
+</div>
+</div>
+
+<!-- 6: 牛学教育 -->
+<div class="slide ct" id="s6">
+<div class="kicker kicker-g">国内 GEO 案例</div>
+<h1>优化前排不上，优化后<em>第一名</em></h1>
+<div class="sub">牛学教育 · 雅思培训 · 搜"西安雅思封闭班哪个好"</div>
+<div class="split">
+<div><img src="screenshots/牛学教育案例.png" class="case-img"></div>
+<div style="display:flex;flex-direction:column;gap:32px;">
+<div><div class="mn mr">优化前</div><div class="ml">AI 搜索结果中完全不在列</div></div>
+<div><div class="mn mg">优化后</div><div class="ml">AI 推荐排名第一</div></div>
+<div class="verdict"><strong>核心逻辑：</strong>不是培训质量变了，是 AI 在互联网上看到它的次数变了。</div>
+</div>
+</div>
+<div class="ft"></div><div class="fs">国内 GEO</div>
+</div>
+
+<!-- 7: 梅见 -->
+<div class="slide ct" id="s7">
+<div class="kicker kicker-g">国内 GEO 案例</div>
+<h1>品牌美誉度<b>增强</b></h1>
+<div class="sub">江小白梅见 · 快消酒业 · 搜"梅见怎么样"</div>
+<div class="split">
+<div><img src="screenshots/梅见.png" class="case-img"></div>
+<div style="display:flex;flex-direction:column;gap:32px;">
+<div><div class="mn mr">优化前</div><div class="ml">AI 展示负面争议内容</div></div>
+<div><div class="mn mg">优化后</div><div class="ml">AI 展示产品优势和正面评价</div></div>
+<div class="verdict"><strong>效果：</strong>30 天 DeepSeek/豆包 TOP3，美誉度 +45%，转化率 +32%</div>
+</div>
+</div>
+<div class="ft"></div><div class="fs">国内 GEO</div>
+</div>
+
+<!-- 8: 核心认知 -->
+<div class="slide quote" id="s8">
+<div class="kicker kicker-r">核心认知</div>
+<h1>AI 推荐的不是最好的<br>是被<em>看到最多</em>的</h1>
+<div class="sub" style="margin-top:32px;">你的产品可能是行业最好的。但如果 AI 不知道你，它会推荐你的竞品。</div>
+</div>
+
+<!-- 9: 车企互攻 -->
+<div class="slide ct" id="s9">
+<div class="kicker kicker-r">GEO 攻击</div>
+<h1><em>70 万篇</em> AI 黑稿攻击新能源车企</h1>
+<div class="sub">GEO 可以推广自己，也可以反过来攻击竞品</div>
+<div class="split">
+<div>
+<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">AI 工具 5 分钟批量生成黑稿</div><div class="item-d">70 万篇，全网阅读 8000 万</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">小米、蔚来、理想联合报案</div><div class="item-d">比亚迪李云飞："源头是竞争对手"</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">网信办确认车企互相攻击</div><div class="item-d">清理 11 万条，关闭 3600 个账号</div></div></div>
+<div class="stat-src" style="font-size:13px;">央视《焦点访谈》2026.1</div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">2026 年 1 月，央视《焦点访谈》起底新能源车圈黑水军产业链。攻击者用 AI 工具批量生成黑稿，车还没上市黑稿就已经刷屏。国家网信办专项行动清理了 11 万余条诋毁信息，关闭 3600 多个账号。攻击者获利仅 8 万元，被攻击的车企要投入数百万甚至上千万监控和辟谣。</p>
+<p style="font-size:14px;color:var(--ink2);opacity:.5;margin-top:12px;">央视《焦点访谈》2026.1 · 澎湃新闻</p>
+</div>
+</div>
+<div class="fs">GEO 攻击</div>
+</div>
+
+<!-- 10: 家电篡改 -->
+<div class="slide ct" id="s10">
+<div class="kicker kicker-r">GEO 攻击</div>
+<h1>能耗数据被篡改<em>半年</em></h1>
+<div class="sub">某家电品牌 · 竞争对手系统性篡改产品参数</div>
+<div style="max-width:700px;">
+<div class="item"><div class="item-n" style="background:var(--accent);">1</div><div><div class="item-d" style="font-size:22px;">竞争对手在多个平台系统性篡改能耗参数</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">2</div><div><div class="item-d" style="font-size:22px;">假数据被 AI 模型抓取</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">3</div><div><div class="item-d" style="font-size:22px;">AI 持续输出错误数据——<strong style="color:var(--accent);">半年</strong></div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">4</div><div><div class="item-d" style="font-size:22px;">删了马上来新的，打地鼠一样</div></div></div>
+</div>
+<div class="verdict-r verdict" style="max-width:700px;"><strong>结论：</strong>不做 GEO = 不只是错过机会，还可能被攻击</div>
+<div class="ft"></div><div class="fs">GEO 攻击 · 量子位 2026.3</div>
+</div>
+
+<!-- 11: 三步走 -->
+<div class="slide cover" id="s11">
+<div class="kicker kicker-g">国内 GEO 打法</div>
+<h1>三步走</h1>
+<div class="split3" style="max-width:900px;margin-top:40px;">
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;">
+<h3 style="color:var(--accent2);">1. 诊断</h3>
+<p>搜品牌名 / 品类词 / 竞品名<br>看 AI 知不知道你</p>
+</div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;">
+<h3 style="color:var(--accent);">2. 铺量</h3>
+<p>在新闻站、百家号、知乎发品牌相关内容<br><strong style="color:var(--accent);">不带网站链接</strong></p>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;">
+<h3>3. 占位</h3>
+<p>百科 / 知乎 / 小红书<br>B 站 / 公众号<br>持续做，长期资产</p>
+</div>
+</div>
+</div>
+
+<!-- 12: 见效 -->
+<div class="slide cover" id="s12">
+<div class="kicker kicker-g">国内 GEO</div>
+<h1><b>1-2 周</b>开始见效</h1>
+<div class="split3" style="max-width:800px;margin-top:40px;">
+<div class="card card-top" style="border-color:var(--accent2);text-align:center;">
+<div class="mn mg">1-2 周</div><div class="ml">AI 开始出现品牌信息</div>
+</div>
+<div class="card card-top" style="border-color:var(--accent);text-align:center;">
+<div class="mn mr">1 月</div><div class="ml">搜品牌名有正面介绍</div>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:center;">
+<div class="mn">3 月</div><div class="ml">品类词出现在推荐列表</div>
+</div>
+</div>
+<div class="verdict" style="max-width:800px;margin-top:32px;"><strong>关键：</strong>每篇角度不同、信息有差异，AI 才认为是多个独立来源</div>
+</div>
+
+<!-- 13: 过渡 -->
+<div class="slide divider" id="s13">
+<h1>国内 vs 海外<br>两套完全不同的玩法</h1>
+<div class="sub" style="margin-bottom:48px;">国内只做 GEO，海外 SEO + GEO 都做</div>
+<div style="display:flex;gap:40px;">
+<div class="card" style="min-width:300px;text-align:left;">
+<h3 style="color:var(--accent);">国内</h3>
+<p>只做 GEO · 围墙花园<br>百度 SEO 不用做</p>
+</div>
+<div class="card" style="min-width:300px;text-align:left;">
+<h3 style="color:var(--accent2);">海外</h3>
+<p>SEO + GEO 都做<br>Google SEO 是基础</p>
+</div>
+</div>
+</div>
+
+<!-- 13b: 海外 AI 用户规模 -->
+<div class="slide ct" id="s13b">
+<div class="kicker kicker-d">海外 AI 搜索</div>
+<h1>海外 AI 的用户规模</h1>
+<div class="sub">各平台官方公布 · 2025-2026</div>
+<!-- 视觉主角：ChatGPT -->
+<div style="text-align:center;margin-top:28px;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:96px;letter-spacing:-4px;color:var(--accent);line-height:1;">9 亿</div>
+<div style="font-size:20px;font-weight:700;margin-top:8px;">ChatGPT 周活跃用户</div>
+<div style="font-size:14px;color:var(--ink2);margin-top:4px;">占所有 AI 引荐流量的 87.4% · TechCrunch 2026.2</div>
+</div>
+<!-- 第二梯队 -->
+<div style="display:flex;gap:48px;justify-content:center;margin-top:48px;">
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:48px;letter-spacing:-2px;color:var(--accent2);line-height:1;">7.5 亿</div>
+<div style="font-size:18px;font-weight:700;margin-top:8px;">Google Gemini</div>
+<div style="font-size:13px;color:var(--ink2);">MAU</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:48px;letter-spacing:-2px;line-height:1;">2.18 亿</div>
+<div style="font-size:18px;font-weight:700;margin-top:8px;">Copilot</div>
+<div style="font-size:13px;color:var(--ink2);">MAU</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:48px;letter-spacing:-2px;color:var(--ink2);line-height:1;">4500 万</div>
+<div style="font-size:18px;font-weight:700;margin-top:8px;">Perplexity</div>
+<div style="font-size:13px;color:var(--ink2);">MAU 估算</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:48px;letter-spacing:-2px;color:var(--ink2);line-height:1;">3000 万</div>
+<div style="font-size:18px;font-weight:700;margin-top:8px;">Claude</div>
+<div style="font-size:13px;color:var(--ink2);">MAU 估算</div>
+</div>
+</div>
+</div>
+
+<!-- 14: SEO 三要素 -->
+<div class="slide cover" id="s14">
+<div class="kicker kicker-d">海外 SEO</div>
+<h1>Google 排名看<em>三件事</em></h1>
+<div class="split3" style="max-width:800px;margin-top:48px;">
+<div class="card card-top" style="border-color:var(--accent);text-align:center;">
+<h3>内容</h3><p>每个关键词<br>一个专门的页面</p>
+</div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:center;">
+<h3>外链</h3><p>其他网站链接到你<br>= 投票</p>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:center;">
+<h3>技术</h3><p>加载快<br>手机端友好</p>
+</div>
+</div>
+</div>
+
+<!-- 15: 铺内页 -->
+<div class="slide ct" id="s15">
+<div class="kicker kicker-d">海外 SEO</div>
+<h1>铺内页：每个关键词一个页面</h1>
+<div style="max-width:700px;margin-top:24px;">
+<div class="item"><div class="item-n" style="background:var(--ink);">1</div><div><div class="item-t">用 Ahrefs 找词</div><div class="item-d">搜品类词看用户在搜什么，看竞品排了哪些词</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--ink);">2</div><div><div class="item-t">优先做交易类关键词</div><div class="item-d">用户准备付钱的词 > 随便看看的词</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--ink);">3</div><div><div class="item-t">深度回答问题</div><div class="item-d">不是堆关键词，是真正回答用户的问题</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--ink);">4</div><div><div class="item-t">页面间互相链接</div><div class="item-d">让 Google 理解你网站的结构</div></div></div>
+</div>
+<div class="ft"></div><div class="fs">海外 SEO</div>
+</div>
+
+<!-- 16: 铺外链 -->
+<div class="slide ct" id="s16">
+<div class="kicker kicker-d">海外 SEO</div>
+<h1>铺外链：质量远比数量重要</h1>
+<div class="split" style="margin-top:24px;">
+<div>
+<h3 style="color:var(--accent2);font-family:'Noto Serif SC',serif;font-size:24px;margin-bottom:16px;">好外链</h3>
+<div style="font-size:20px;line-height:2.2;">
+<p><strong style="color:var(--accent2);">O</strong> 真实权威网站</p>
+<p><strong style="color:var(--accent2);">O</strong> 手工一个一个谈</p>
+<p><strong style="color:var(--accent2);">O</strong> DR（域名评级）30+</p>
+<p><strong style="color:var(--accent2);">O</strong> dofollow 链接</p>
+</div>
+</div>
+<div>
+<h3 style="color:var(--accent);font-family:'Noto Serif SC',serif;font-size:24px;margin-bottom:16px;">垃圾外链</h3>
+<div style="font-size:20px;line-height:2.2;">
+<p><strong style="color:var(--accent);">X</strong> 域名乱码</p>
+<p><strong style="color:var(--accent);">X</strong> DR 0-5</p>
+<p><strong style="color:var(--accent);">X</strong> 批量买的站群</p>
+<p><strong style="color:var(--accent);">X</strong> 不但没用还伤网站</p>
+</div>
+</div>
+</div>
+<div class="ft"></div><div class="fs">海外 SEO</div>
+</div>
+
+<!-- 17: Ahrefs -->
+<div class="slide cover" id="s17">
+<div class="kicker kicker-d">海外 SEO</div>
+<h1>Ahrefs 现场演示</h1>
+<div class="sub">SEO 不是玄学，每个排名背后都有数据</div>
+<div class="split3" style="max-width:800px;margin-top:40px;">
+<div class="card card-top" style="border-color:var(--accent);text-align:left;">
+<h3>1. 看基本面</h3><p>输入 URL → DR、关键词数、月流量</p>
+</div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;">
+<h3>2. 看外链</h3><p>逐条看来源站质量<br>分辨好坏</p>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;">
+<h3>3. 看竞品</h3><p>竞品排了什么词<br>外链从哪来</p>
+</div>
+</div>
+</div>
+
+<!-- 18: 竞争弱 = 基本功就能赢 -->
+<div class="slide ct" id="s18">
+<div class="kicker kicker-g">海外 SEO</div>
+<h1>竞争弱的市场，<b>基本功</b>就能赢</h1>
+<div class="sub">一个柴油卡车修理站的启示</div>
+<div class="split">
+<div>
+<div style="margin-bottom:24px;"><div class="mn mg">4 小时</div><div class="ml">AI 工具建了 50 页网站</div></div>
+<div style="margin-bottom:24px;"><div class="mn mg">24 小时</div><div class="ml">Google 搜索 + 地图前三</div></div>
+<div style="margin-bottom:24px;"><div class="mn mr">89%</div><div class="ml">外链是垃圾——但不影响排名</div></div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">这个站的外链建设很差（89% 是垃圾链接），但内容做得不错——每个服务、每个地点都有专门的页面。关键是竞争对手都是经营 20 年的老店，网站十几年没更新。在这种市场里，做到 60 分就能碾压。</p>
+<div class="verdict" style="margin-top:20px;"><strong>启示：</strong>SEO 的第一步不是做 SEO——是看你的赛道竞争有多强。</div>
+</div>
+</div>
+<div class="fs">海外 SEO</div>
+</div>
+
+<!-- 18b: Google 惩罚 -->
+<div class="slide ct" id="s18b">
+<div class="kicker kicker-r">海外 SEO</div>
+<h1>违规的代价：Forbes 流量<em>跌 99.95%</em></h1>
+<div class="sub">2024 年，全球顶级媒体因违规 SEO 被 Google 集体惩罚</div>
+<div class="split">
+<div>
+<div style="margin-bottom:28px;">
+<div style="font-size:20px;font-weight:700;margin-bottom:8px;">Forbes Advisor</div>
+<div style="display:flex;gap:16px;align-items:baseline;"><div class="mn mr" style="font-size:36px;">2360 万</div><div style="font-size:24px;color:var(--ink2);">→</div><div class="mn mr" style="font-size:36px;">1.1 万</div></div>
+<div class="ml">月访问量跌 99.95%</div>
+</div>
+<div style="margin-bottom:28px;">
+<div style="font-size:20px;font-weight:700;margin-bottom:8px;">CNN Underscored</div>
+<div style="display:flex;gap:16px;align-items:baseline;"><div class="mn mr" style="font-size:36px;">320 万</div><div style="font-size:24px;color:var(--ink2);">→</div><div class="mn mr" style="font-size:36px;">945</div></div>
+<div class="ml">几乎完全被反索引</div>
+</div>
+<div>
+<div style="font-size:20px;font-weight:700;margin-bottom:8px;">TIME · 美联社</div>
+<div class="ml" style="font-size:18px;">直接关闭了相关业务线</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">这些全球顶级媒体借自己的域名权重，托管第三方公司的联盟营销内容（寄生 SEO）。Google 2024 年发布 Site Reputation Abuse 政策后，集中清洗。Forbes、CNN、华尔街日报、时代周刊、美联社全部中招。</p>
+<div class="verdict-r verdict" style="margin-top:20px;"><strong>连 Forbes 和 CNN 都逃不过，任何人都不应该心存侥幸。</strong></div>
+</div>
+</div>
+<div class="fs">海外 SEO · Adweek / Growtika 2024</div>
+</div>
+
+<!-- 18c: 垃圾外链三个死亡案例 -->
+<div class="slide ct" id="s18c">
+<div class="kicker kicker-r">海外 SEO</div>
+<h1>三个被 Google <em>永久移除</em>的网站</h1>
+<div class="sub">2024 年 3 月 · 全部因垃圾外链 + AI 灌内容被判 Pure Spam · 无一恢复</div>
+<div class="split3" style="margin-top:20px;">
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:36px;color:var(--accent);line-height:1;">100 万+</div>
+<div style="font-size:14px;color:var(--ink2);margin-top:4px;">月流量 → 归零</div>
+<div style="font-size:20px;font-weight:700;margin-top:20px;">zacjohnson.com</div>
+<div style="font-size:15px;color:var(--ink2);margin-top:8px;line-height:1.6;text-align:left;">半年内发了 6 万篇文章（日均 325 篇），大量垃圾外链堆砌，AI 批量生成内容。Ahrefs 流量曲线从百万直接归零——完美的「悬崖」。</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:36px;color:var(--accent);line-height:1;">100 万+</div>
+<div style="font-size:14px;color:var(--ink2);margin-top:4px;">月流量 → 归零</div>
+<div style="font-size:20px;font-weight:700;margin-top:20px;">beingselfish.in</div>
+<div style="font-size:15px;color:var(--ink2);margin-top:8px;line-height:1.6;text-align:left;">典型的「过期域名 + 灌内容 + 堆外链」模式。外链质量极低，网站连图片都加载不出来。同日断崖归零。</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:36px;color:var(--accent);line-height:1;">100 万+</div>
+<div style="font-size:14px;color:var(--ink2);margin-top:4px;">月流量 → 归零</div>
+<div style="font-size:20px;font-weight:700;margin-top:20px;">equityatlas.org</div>
+<div style="font-size:15px;color:var(--ink2);margin-top:8px;line-height:1.6;text-align:left;">.org 过期域名被买下滥用。同样是垃圾外链 + AI 内容。证明域名后缀不能保护你——Google 看的是行为。</div>
+</div>
+</div>
+<div class="verdict-r verdict" style="margin-top:20px;"><strong>SEO 分析师追踪了同期 1000 个被移除的站，没有一个恢复。不要找不正规的 SEO 服务——流量暴力拉起，然后永久玩完。</strong></div>
+</div>
+
+<!-- 19: B2B 出海 -->
+<div class="slide ct" id="s19">
+<div class="kicker kicker-g">海外 SEO 案例</div>
+<h1>3 篇文章 + 50 条外链<br>= 日均 <b>1 条</b>询盘</h1>
+<div class="sub">B2B 服务出海 · 帮海外品牌代运营小红书</div>
+<div class="split">
+<div>
+<div class="stats" style="flex-wrap:wrap;gap:32px;">
+<div class="stat"><div class="stat-num">3</div><div class="stat-label">篇 "Best Agency" 文章</div></div>
+<div class="stat"><div class="stat-num">50</div><div class="stat-label">条 DR40+ 外链</div></div>
+<div class="stat"><div class="stat-num mg">日均 1</div><div class="stat-label">条询盘</div></div>
+</div>
+<div class="verdict" style="margin-top:32px;">
+<strong>对比：</strong>Google 广告花了 3000 全是垃圾流量。SEO 来的客户是主动找你的。
+</div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">一位做海外品牌小红书代运营的创业者，一开始每月只有 4-5 个咨询。写了 3 篇"Best XXX Agency"行业对比文章，在 50 个 DR40+ 的权威站做了外链。6 个月后，从月 4-5 个咨询变成日均 1 条询盘，签了年度合同。</p>
+</div>
+</div>
+<div class="fs">海外 SEO</div>
+</div>
+
+<!-- 20: Medical -->
+<div class="slide ct" id="s20">
+<div class="kicker kicker-g">海外 SEO 案例</div>
+<h1>一篇文章 = 全站 <b>84%</b> 流量</h1>
+<div class="sub">Northeast Medical Group · 美国 130+ 诊所</div>
+<div class="split">
+<div>
+<div style="margin-bottom:24px;"><div class="mn mg">+893%</div><div class="ml">有机流量同比增长</div></div>
+<div style="margin-bottom:24px;"><div class="mn mr">84.4%</div><div class="ml">全站流量来自这一篇文章</div></div>
+<div><div class="mn">25 万</div><div class="ml">月访问量</div></div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">美国东北部一个有 130 多个诊所的医疗网络。他们写了一篇针对长尾健康问题的深度文章，引用了自家医生的专业观点，内容结构清晰。这一篇文章带来了全站 84.4% 的流量，每月 25 万次访问，还额外通过 Google AI Overview 每月多获得 8300 次流量。</p>
+<p style="font-size:14px;color:var(--ink2);opacity:.5;margin-top:12px;">AIOSEO 2025 案例</p>
+</div>
+</div>
+<div class="fs">海外 SEO</div>
+</div>
+
+<!-- 21: 识别骗子 -->
+<div class="slide ct" id="s21">
+<div class="kicker kicker-r">海外 SEO</div>
+<h1>三句话识别 SEO 骗子</h1>
+<div style="max-width:700px;margin-top:40px;">
+<div style="padding:28px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:24px;">
+<div style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:var(--accent);">1</div>
+<div><div style="font-size:24px;font-weight:700;">"保证排名第一"</div><div style="font-size:18px;color:var(--ink2);margin-top:4px;">Google 自己都保证不了</div></div>
+</div>
+<div style="padding:28px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:24px;">
+<div style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:var(--accent);">2</div>
+<div><div style="font-size:24px;font-weight:700;">"给你做 1000 个外链"</div><div style="font-size:18px;color:var(--ink2);margin-top:4px;">批量外链 = 垃圾外链，伤害网站</div></div>
+</div>
+<div style="padding:28px 0;display:flex;align-items:center;gap:24px;">
+<div style="font-family:'Noto Serif SC',serif;font-size:48px;font-weight:900;color:var(--accent);">3</div>
+<div><div style="font-size:24px;font-weight:700;">"一周上首页"</div><div style="font-size:18px;color:var(--ink2);margin-top:4px;">快排刷点击，迟早被罚</div></div>
+</div>
+</div>
+<div class="ft"></div><div class="fs">海外 SEO</div>
+</div>
+
+<!-- 22: 海外 GEO -->
+<div class="slide ct" id="s22">
+<div class="kicker kicker-g">海外 GEO</div>
+<h1>海外没有围墙花园<br>但各 AI 有<b>偏好</b></h1>
+<div style="max-width:700px;margin-top:32px;">
+<div class="bar"><div class="bar-l">ChatGPT</div><div class="bar-t"><div class="bar-f" style="width:48%;background:var(--accent);">Wikipedia 47.9%</div></div></div>
+<div class="bar"><div class="bar-l">Perplexity</div><div class="bar-t"><div class="bar-f" style="width:47%;background:var(--accent2);">Reddit 46.7%</div></div></div>
+<div class="bar"><div class="bar-l">Google AI</div><div class="bar-t"><div class="bar-f" style="width:97%;background:var(--ink);">Google 排名前 10</div></div></div>
+</div>
+<div class="verdict" style="max-width:700px;margin-top:24px;">
+<strong>关键数据：</strong>ChatGPT 全球只向 3 万个域名发流量，占 AI 引荐的 87.4%
+</div>
+<div class="ft"></div><div class="fs">海外 GEO · Profound / Conductor 2025</div>
+</div>
+
+<!-- 23: 海外 GEO 四步 -->
+<div class="slide cover" id="s23">
+<div class="kicker kicker-g">海外 GEO</div>
+<h1>海外 GEO 四步</h1>
+<div class="split4" style="max-width:960px;margin-top:48px;">
+<div class="card card-top" style="border-color:var(--accent);text-align:center;">
+<h3>Wikipedia</h3><p>ChatGPT<br>最爱引用</p>
+</div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:center;">
+<h3>Reddit</h3><p>Perplexity 47%<br>真实讨论</p>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:center;">
+<h3>YouTube</h3><p>AI 第二大<br>引用来源</p>
+</div>
+<div class="card card-top" style="border-color:var(--rule);text-align:center;">
+<h3>PR Wire</h3><p>300-500 新闻站<br><strong style="color:var(--accent);">不放链接</strong></p>
+</div>
+</div>
+</div>
+
+<!-- 24: Viv -->
+<div class="slide ct" id="s24">
+<div class="kicker kicker-g">海外 GEO 案例</div>
+<h1>小品牌被 ChatGPT <b>翻盘</b></h1>
+<div class="sub">Viv 卫生棉条 · 传统搜索打不赢巨头，AI 重新洗牌</div>
+<div class="split">
+<div>
+<div style="display:flex;gap:24px;margin-bottom:24px;">
+<div style="text-align:center;flex:1;"><div class="mn mg">+400%</div><div class="ml">网站流量</div></div>
+<div style="text-align:center;flex:1;"><div class="mn mr">+436%</div><div class="ml">转化率</div></div>
+</div>
+<div style="text-align:center;margin-bottom:24px;"><div class="mn" style="color:var(--ink);">3 周卖光</div><div class="ml">6 个月的库存</div></div>
+<div class="verdict"><strong>营销总监：</strong>"流量不知道从哪来的"——查了半天才发现是 ChatGPT</div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">2024 年 7 月，科学论文发现多个知名卫生棉条品牌含重金属。消费者用 ChatGPT 搜"无毒经期产品"。Viv 是小众品牌，传统搜索打不赢 Tampax、Always 这些巨头。但他们的博客长期写了大量产品安全检测内容，被 ChatGPT 选中推荐。6 个月的库存 3 周卖光。</p>
+<p style="font-size:14px;color:var(--ink2);opacity:.5;margin-top:12px;">Modern Retail 2024</p>
+</div>
+</div>
+<div class="fs">海外 GEO</div>
+</div>
+
+<!-- 25: Go Fish -->
+<div class="slide ct" id="s25">
+<div class="kicker kicker-g">海外 GEO 案例</div>
+<h1>AI 客户转化率 = 传统搜索的 <em>25 倍</em></h1>
+<div class="sub">Go Fish Digital · 自己做实验，3 个月数据</div>
+<div class="split">
+<div>
+<div style="margin-bottom:24px;"><div class="mn mg">+43%</div><div class="ml">AI 来源流量</div></div>
+<div style="margin-bottom:24px;"><div class="mn mr" style="font-size:64px;">25x</div><div class="ml">转化率 vs 传统搜索</div></div>
+<div><div class="mn mg">3x</div><div class="ml">Leads 翻 3 倍</div></div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;">
+<p style="font-size:18px;color:var(--ink2);line-height:1.8;">一家美国营销公司拿自己做实验。3 个月内专门针对 AI 搜索做了 5-8 篇"基石内容"——每篇有原创数据、权威引用、FAQ 结构，设计成"AI 不得不引用"的格式。AI 搜索来的客户转化率是传统搜索的 25 倍——因为 AI 在回答中引用你的品牌，等于在客户点进来之前就帮你做了信任建立。</p>
+<p style="font-size:14px;color:var(--ink2);opacity:.5;margin-top:12px;">Go Fish Digital 2025</p>
+</div>
+</div>
+<div class="fs">海外 GEO</div>
+</div>
+
+<!-- 26: 反直觉 -->
+<div class="slide quote" id="s26">
+<div class="kicker kicker-r">反直觉</div>
+<h1 style="font-size:48px;"><em>50 万</em>改版网站<br>不如 <b>5000</b> 铺新闻站</h1>
+<div class="sub" style="margin-top:32px;max-width:600px;">AI 不看你的网站，看的是整个互联网上有多少人在谈论你。优先级变了。</div>
+</div>
+
+<!-- 27: 趋势 -->
+<div class="slide ct" id="s27">
+<div class="kicker kicker-r">趋势</div>
+<h1>三个正在发生的事</h1>
+<div style="max-width:700px;margin-top:40px;">
+<div style="padding:28px 0;border-bottom:1px solid var(--rule);">
+<div style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;">传统搜索在消失</div>
+<div style="font-size:20px;color:var(--ink2);margin-top:8px;">Gartner：2028 年搜索量降 50%</div>
+</div>
+<div style="padding:28px 0;border-bottom:1px solid var(--rule);">
+<div style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;">AI 搜索在爆发</div>
+<div style="font-size:20px;color:var(--ink2);margin-top:8px;">AI 引荐流量同比增长 527%</div>
+</div>
+<div style="padding:28px 0;">
+<div style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;color:var(--accent);">AI 推荐的不是最好的</div>
+<div style="font-size:20px;color:var(--ink2);margin-top:8px;">是它看到最多的</div>
+</div>
+</div>
+<div class="ft"></div><div class="fs">趋势</div>
+</div>
+
+<!-- 28: 行动 -->
+<div class="slide ct" id="s28">
+<div class="kicker kicker-g">行动</div>
+<h1>今天花 <b>30 分钟</b>做三件事</h1>
+<div style="max-width:700px;margin-top:40px;">
+<div style="padding:24px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:24px;">
+<div class="mn mg" style="min-width:80px;">5'</div>
+<div><div style="font-size:24px;font-weight:700;">搜你的品牌名</div><div style="font-size:18px;color:var(--ink2);margin-top:4px;">豆包 / DeepSeek / ChatGPT</div></div>
+</div>
+<div style="padding:24px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:24px;">
+<div class="mn mr" style="min-width:80px;">10'</div>
+<div><div style="font-size:24px;font-weight:700;">搜 3 个竞品</div><div style="font-size:18px;color:var(--ink2);margin-top:4px;">他们在你不在——你已经落后了</div></div>
+</div>
+<div style="padding:24px 0;display:flex;align-items:center;gap:24px;">
+<div class="mn" style="min-width:80px;">15'</div>
+<div><div style="font-size:24px;font-weight:700;">建百度百科 / Wikipedia</div><div style="font-size:18px;color:var(--ink2);margin-top:4px;">一个条目可能比花大价钱做 SEO 还有效</div></div>
+</div>
+</div>
+<div class="ft"></div><div class="fs">行动</div>
+</div>
+
+<!-- 29: 总结 -->
+<div class="slide cover" id="s29">
+<div class="kicker kicker-r">总结</div>
+<h1>不被 AI 引用的品牌<br>= <em>不存在</em>的品牌</h1>
+<div class="sub" style="margin-top:16px;">SEO 让客户在 Google 找到你<br>GEO 让 AI 替你说话</div>
+<div class="stats" style="margin-top:48px;">
+<div class="stat"><div class="stat-num mr">国内</div><div class="stat-label">只做 GEO · 按平台铺</div></div>
+<div class="stat"><div class="stat-num mg">海外</div><div class="stat-label">SEO + GEO · 全网权威</div></div>
+</div>
+</div>
+
+<script>
+const S=document.querySelectorAll('.slide');let c=0;const T=S.length;
+function go(n){S[c].classList.remove('active');c=Math.max(0,Math.min(n,T-1));S[c].classList.add('active');document.getElementById('pn').textContent=(c+1)+' / '+T;document.getElementById('pb').style.width=((c+1)/T*100)+'%';}
+go(0);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(c+1);}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(c-1);}else if(e.key==='Home')go(0);else if(e.key==='End')go(T-1);});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;});document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>50){d>0?go(c+1):go(c-1);}});
+document.addEventListener('click',e=>{if(e.target.tagName==='A'||e.target.tagName==='BUTTON')return;if(e.clientX>window.innerWidth*.6)go(c+1);else if(e.clientX<window.innerWidth*.4)go(c-1);});
+</script>
+</body>
+</html>
