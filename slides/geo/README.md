@@ -4,7 +4,7 @@
 
 ## 文件结构
 
-- `index.html`：最终 41 页幻灯片，固定 1920x1080 舞台，浏览器自动缩放。
+- `index.html`：最终 49 页幻灯片，固定 1920x1080 舞台，浏览器自动缩放。
 - `assets/screenshots/`：从原站下载的 4 张案例截图资源。
 - `assets/evidence/`：市场数据和海外案例的真实来源截图。
 - `source/original.html`：原始页面备份。
@@ -49,4 +49,4 @@ cd /Users/jaycehuang/Projects/jayce_blog
 
 ## 来源
 
-内容来自你拥有的 `https://seo.yidabuilds.com/`，并补充了 GEO 市场数据、国内外案例和来源截图，已迁移为 41 页 Frontend Slides 风格工程。
+内容来自你拥有的 `https://seo.yidabuilds.com/`，并补充了 GEO 市场数据、国内外案例和来源截图，已迁移为 49 页 Frontend Slides 风格工程。

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI 时代的 GEO | 让 AI 认识并推荐你的品牌</title>
-  <meta name="description" content="一套 34 页 GEO 主题 HTML 幻灯片，基于 Frontend Slides 固定 16:9 舞台重构。" />
+  <meta name="description" content="一套 49 页 GEO 主题 HTML 幻灯片，基于 Frontend Slides 固定 16:9 舞台重构。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800;900&family=Noto+Serif+SC:wght@700;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -285,7 +285,7 @@ svg {
 
 
 /* Cover */
-.cover{justify-content:center;padding:120px 180px}
+.cover{justify-content:flex-start;padding:30px 180px 120px}
 .kicker{font-size:21px;letter-spacing:6px;text-transform:uppercase;font-weight:700;margin-bottom:42px}
 .kicker::before{content:'';display:inline-block;width:42px;height:3px;margin-right:15px;vertical-align:middle}
 .kicker-r{color:var(--accent)}.kicker-r::before{background:var(--accent)}
@@ -304,7 +304,7 @@ h1 b{font-style:normal;color:var(--accent2)}
 .stat-src{font-size:16.5px;color:var(--rule);margin-top:3px}
 
 /* Content */
-.ct{padding:120px 180px}
+.ct{padding:30px 180px 120px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:72px;flex:1;min-height:0;align-items:center}
 .split3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;flex:1;min-height:0}
 .split4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:36px;flex:1;min-height:0}
@@ -352,11 +352,11 @@ tr:last-child td{border-bottom:none}
 .thl td{background:var(--soft-green)}
 
 /* Quote page */
-.quote{justify-content:center;align-items:center;text-align:center;padding:120px 240px}
+.quote{justify-content:flex-start;align-items:center;text-align:center;padding:30px 240px 120px}
 .quote h1{font-size:84px;max-width:1200px;line-height:1.3}
 
 /* Divider */
-.divider{justify-content:center;align-items:center;text-align:center;padding:120px 180px;background:var(--dark);color:#fff;border-top:10px solid var(--accent3)}
+.divider{justify-content:flex-start;align-items:center;text-align:center;padding:30px 180px 120px;background:var(--dark);color:#fff;border-top:10px solid var(--accent3)}
 .divider h1{color:#fff;font-size:84px}
 .divider .sub{color:rgba(255,255,255,.5)}
 .divider .card{background:var(--dark2);color:#fff;border:1.5px solid rgba(255,255,255,.08)}
@@ -370,7 +370,7 @@ tr:last-child td{border-bottom:none}
 
 /* Footer */
 .ft{display:none}
-.fs{position:absolute;top:54px;right:180px;font-size:18px;color:var(--accent3);letter-spacing:1.5px;opacity:.55;text-align:right}
+.fs{position:absolute;top:30px;right:180px;font-size:18px;color:var(--accent3);letter-spacing:1.5px;opacity:.55;text-align:right}
 .cf{position:absolute;bottom:48px;left:180px;font-size:19.5px;color:var(--ink2);opacity:.4}
 
 @keyframes fi{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -411,62 +411,34 @@ tr:last-child td{border-bottom:none}
 
   <div class="deck-viewport">
     <main class="deck-stage" id="deckStage">
-<!-- Slide 01: source s1 -->
-<section class="slide cover active visible" id="slide-01" data-source-id="s1">
-<div class="kicker kicker-r">目录</div>
-<h1>从 SEO 到 GEO<br>AI 时代的新入口</h1>
-<div class="split4" style="max-width:1440px;margin-top:54px;">
-<div class="card card-top" style="border-color:var(--ink);text-align:left;"><h3>01</h3><p>SEO 是什么<br>为什么过去那么火</p></div>
-<div class="card card-top" style="border-color:var(--accent);text-align:left;"><h3>02</h3><p>当前 GEO 市场<br>规模和增长</p></div>
-<div class="card card-top" style="border-color:var(--accent2);text-align:left;"><h3>03</h3><p>国内外 GEO<br>作用、效果和风险</p></div>
-<div class="card card-top" style="border-color:var(--rule);text-align:left;"><h3>04</h3><p>GEO 怎么做<br>国内打法和海外打法</p></div>
+<!-- Slide 01: global structure -->
+<section class="slide cover active visible" id="slide-01" data-source-id="global-structure">
+<div class="kicker kicker-r">总结构</div>
+<h1>GEO 课程地图<br>从入口变化到落地打法</h1>
+<div class="split4" style="max-width:1500px;margin-top:48px;gap:28px;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:30px;"><h3>01</h3><p>入口变化<br>SEO 为什么让位给 GEO</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:30px;"><h3>02</h3><p>市场证据<br>GEO 为什么是现在</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:30px;"><h3>03</h3><p>效果案例<br>被 AI 推荐会发生什么</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:30px;"><h3>04</h3><p>风险与未来<br>不做 GEO 会失去什么</p></div>
+<div class="card card-top" style="border-color:var(--accent5);text-align:left;padding:30px;"><h3>05</h3><p>方法论<br>AI 如何决定推荐谁</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:30px;"><h3>06</h3><p>国内打法<br>平台生态与内容矩阵</p></div>
+<div class="card card-top" style="border-color:var(--accent4);text-align:left;padding:30px;"><h3>07</h3><p>海外打法<br>官网、技术与外部信号</p></div>
+<div class="card card-top" style="border-color:var(--rule);text-align:left;padding:30px;"><h3>08</h3><p>避坑行动<br>识别骗局并立刻开始</p></div>
 </div>
-<div class="verdict" style="max-width:1200px;margin-top:48px;"><strong>主线：</strong>先看入口为什么变，再看如何让 AI 认识、相信并推荐你。</div>
-<div class="cf">2026.06.26</div>
+<div class="cf">2026.06.27</div>
 </section>
 
-<!-- Slide 02: source s2 -->
-<section class="slide ct" id="slide-02" data-source-id="s2">
-<div class="kicker kicker-d">市场规模</div>
-<h1>GEO 还是早期市场<br>但增长速度很快</h1>
-<div class="sub">它站在 AI Search 和传统 SEO 迁移的交叉点上</div>
-<div class="split3" style="max-width:1320px;margin-top:48px;flex:none;align-items:start;">
-<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:42px;">
-<div class="mn mr" style="font-size:66px;">8.48 亿美元</div>
-<div class="ml" style="font-size:30px;">2025 年 GEO 市场规模</div>
-</div>
-<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:42px;">
-<div class="mn mg" style="font-size:66px;">198 亿美元</div>
-<div class="ml" style="font-size:30px;">2034 年预计规模<br>年复合增长率 50.5%</div>
-</div>
-<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:42px;">
-<div class="mn" style="font-size:66px;">182.8 亿美元</div>
-<div class="ml" style="font-size:30px;">2025 年 AI Search Engine 市场规模</div>
-</div>
-</div>
-<div class="verdict" style="max-width:1320px;margin-top:48px;"><strong>判断：</strong>GEO 正在吃搜索、内容营销和品牌公关预算；谁先进入 AI 答案，谁先拿到新入口红利。</div>
-</section>
-
-<!-- Slide 02b: source s2-proof -->
-<section class="slide ct" id="slide-02b" data-source-id="s2-proof">
-<div class="kicker kicker-d">市场规模 · 来源截图</div>
-<h1>这不是概念炒作<br>已经有独立市场报告</h1>
-<div class="split" style="margin-top:42px;grid-template-columns:1.12fr .88fr;align-items:start;">
-<div>
-<img src="/geo-assets/evidence/marketintelo-geo-market.png" class="evidence-img" style="max-height:620px;" alt="MarketIntelo GEO market report screenshot">
-<div class="evidence-caption">来源截图：MarketIntelo《Generative Engine Optimization (GEO) Market Research Report 2034》</div>
-</div>
-<div style="display:flex;flex-direction:column;gap:30px;">
-<div class="evidence-note" style="margin-top:0;font-size:27px;"><strong>中文解读：</strong>这张图说明 GEO 已经被单独作为市场研究对象统计。</div>
-<div class="card card-top" style="border-color:var(--accent2);text-align:left;">
-<h3>报告在统计什么？</h3>
-<p>AI 可见度分析、内容优化、品牌引用监控、AI 答案占位。</p>
-</div>
-<div class="card card-top" style="border-color:var(--accent);text-align:left;">
-<h3>为什么重要？</h3>
-<p>这意味着 GEO 正从“营销技巧”变成一个可购买、可交付、可监控的服务市场。</p>
-</div>
-</div>
+<!-- Chapter 01: 入口变化：SEO 为什么让位给 GEO -->
+<section class="slide cover" id="chapter-01" data-source-id="chapter-01">
+<div class="kicker kicker-d">章节 01</div>
+<h1 style="font-size:84px;">入口变化：SEO 为什么让位给 GEO</h1>
+<div class="sub" style="margin-top:18px;">先讲清楚老入口和新入口的差别</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>SEO 是什么</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>SEO 为什么曾经火</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>用户开始直接问 AI</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>GEO 是什么</p></div>
+<div class="card card-top" style="border-color:var(--accent5);text-align:left;padding:34px;"><h3>05</h3><p>AI 正在变成购买入口</p></div>
 </div>
 </section>
 
@@ -539,11 +511,70 @@ tr:last-child td{border-bottom:none}
 <div class="verdict" style="max-width:1200px;margin-top:48px;"><strong>关键变化：</strong>过去用户自己判断，现在 AI 先替用户筛一遍。</div>
 </section>
 
+<!-- Chapter 02: 市场证据：GEO 为什么是现在 -->
+<section class="slide cover" id="chapter-02" data-source-id="chapter-02">
+<div class="kicker kicker-r">章节 02</div>
+<h1 style="font-size:84px;">市场证据：GEO 为什么是现在</h1>
+<div class="sub" style="margin-top:18px;">用市场规模和用户规模证明这不是概念</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>GEO 市场规模</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>市场报告截图</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>国内 AI 应用进入亿级</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>海外 AI 助手成为十亿级入口</p></div>
+</div>
+</section>
+
+<!-- Slide 02: source s2 -->
+<section class="slide ct" id="slide-02" data-source-id="s2">
+<div class="kicker kicker-d">市场规模</div>
+<h1>GEO 还是早期市场<br>但增长速度很快</h1>
+<div class="sub">它站在 AI Search 和传统 SEO 迁移的交叉点上</div>
+<div class="split3" style="max-width:1320px;margin-top:36px;flex:none;align-items:start;">
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:42px;">
+<div class="mn mr" style="font-size:66px;">8.48 亿美元</div>
+<div class="ml" style="font-size:30px;">2025 年 GEO 市场规模</div>
+</div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:42px;">
+<div class="mn mg" style="font-size:66px;">198 亿美元</div>
+<div class="ml" style="font-size:30px;">2034 年预计规模<br>年复合增长率 50.5%</div>
+</div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:42px;">
+<div class="mn" style="font-size:66px;">182.8 亿美元</div>
+<div class="ml" style="font-size:30px;">2025 年 AI Search Engine 市场规模</div>
+</div>
+</div>
+<div style="max-width:1320px;margin-top:18px;font-size:18px;color:var(--ink2);">口径：GEO 市场来自 MarketIntelo 2026；AI Search Engine 市场来自 Grand View Research 2025 预测口径。</div>
+<div class="verdict" style="max-width:1320px;margin-top:30px;"><strong>判断：</strong>GEO 正在吃搜索、内容营销和品牌公关预算；谁先进入 AI 答案，谁先拿到新入口红利。</div>
+</section>
+
+<!-- Slide 02b: source s2-proof -->
+<section class="slide ct" id="slide-02b" data-source-id="s2-proof">
+<div class="kicker kicker-d">市场规模 · 来源截图</div>
+<h1>这不是概念炒作<br>已经有独立市场报告</h1>
+<div class="split" style="margin-top:42px;grid-template-columns:1.12fr .88fr;align-items:start;">
+<div>
+<img src="/geo-assets/evidence/marketintelo-geo-market.png" class="evidence-img" style="max-height:620px;" alt="MarketIntelo GEO market report screenshot">
+<div class="evidence-caption">来源截图：MarketIntelo《Generative Engine Optimization (GEO) Market Research Report 2034》</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:30px;">
+<div class="evidence-note" style="margin-top:0;font-size:27px;"><strong>中文解读：</strong>这张图说明 GEO 已经被单独作为市场研究对象统计。</div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;">
+<h3>报告在统计什么？</h3>
+<p>AI 可见度分析、内容优化、品牌引用监控、AI 答案占位。</p>
+</div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;">
+<h3>为什么重要？</h3>
+<p>这意味着 GEO 正从“营销技巧”变成一个可购买、可交付、可监控的服务市场。</p>
+</div>
+</div>
+</div>
+</section>
+
 <!-- Slide 08: source s6 -->
 <section class="slide ct" id="slide-08" data-source-id="s6">
 <div class="kicker kicker-g">国内市场</div>
 <h1>国内 AI 应用已经进入<br><b>亿级用户</b>阶段</h1>
-<div class="sub">AI-native 应用 MAU 约 4.4 亿 · QuestMobile 2026 Q1</div>
+<div class="sub">截止 2026 年 3 月，AI-native App 月活约 4.4 亿 · QuestMobile</div>
 <div class="split" style="margin-top:42px;grid-template-columns:.95fr 1.05fr;">
 <div>
 <div style="display:flex;gap:42px;align-items:flex-end;flex-wrap:wrap;">
@@ -556,7 +587,7 @@ tr:last-child td{border-bottom:none}
 <div style="text-align:center;flex:1;">
 <div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:84px;letter-spacing:-3px;color:var(--accent);line-height:1;">1.66</div>
 <div style="font-size:27px;color:var(--accent);font-weight:700;margin-top:6px;">亿</div>
-<div style="font-size:27px;font-weight:700;margin-top:18px;">通义千问</div>
+<div style="font-size:27px;font-weight:700;margin-top:18px;">千问</div>
 <div style="font-size:21px;color:var(--ink2);">阿里</div>
 </div>
 <div style="text-align:center;flex:1;">
@@ -565,19 +596,41 @@ tr:last-child td{border-bottom:none}
 <div style="font-size:27px;font-weight:700;margin-top:18px;">DeepSeek</div>
 </div>
 <div style="text-align:center;flex:1;">
-<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:84px;letter-spacing:-3px;color:var(--ink2);line-height:1;">1.14</div>
+<div style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:84px;letter-spacing:-3px;color:var(--ink2);line-height:1;">4.4</div>
 <div style="font-size:27px;color:var(--ink2);font-weight:700;margin-top:6px;">亿</div>
-<div style="font-size:27px;font-weight:700;margin-top:18px;">腾讯元宝</div>
+<div style="font-size:27px;font-weight:700;margin-top:18px;">行业总 MAU</div>
 </div>
 </div>
 </div>
 <div>
 <img src="/geo-assets/evidence/biggo-questmobile-ai-native.png" class="evidence-img" alt="QuestMobile China AI-native apps MAU screenshot">
 <div class="evidence-note"><strong>中文解读：</strong>这张图说明国内 AI 应用已经进入大规模使用阶段，豆包、通义、DeepSeek 是用户规模领先的平台。</div>
-<div class="evidence-caption">来源截图：BigGo Finance 转述 QuestMobile 2026 Q1 AI-native apps 数据</div>
+<div class="evidence-caption">数据源：QuestMobile 2026 Q1 AI 应用洞察；截图为 BigGo Finance 转述</div>
 </div>
 </div>
-<div class="ft"></div><div class="fs">QuestMobile / 36Kr 2026</div>
+<div class="ft"></div><div class="fs">QuestMobile 2026 Q1</div>
+</section>
+
+<!-- Slide 10: source s8 -->
+<section class="slide quote" id="slide-10" data-source-id="s8">
+<div class="kicker kicker-d">海外市场</div>
+<h1>海外 AI 助手<br>已经是<em>十亿级入口</em></h1>
+<div class="sub" style="margin-top:48px;">Sensor Tower 2026：ChatGPT 月活超过 11 亿，Gemini 约 6.62 亿，Claude 约 2.45 亿</div>
+</section>
+
+<!-- Chapter 03: 效果案例：被 AI 推荐会发生什么 -->
+<section class="slide cover" id="chapter-03" data-source-id="chapter-03">
+<div class="kicker kicker-g">章节 03</div>
+<h1 style="font-size:84px;">效果案例：被 AI 推荐会发生什么</h1>
+<div class="sub" style="margin-top:18px;">用国内外案例说明 GEO 能带来的实际结果</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>豆包 / DeepSeek 推荐</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>牛学教育第一名</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>梅见美誉度修复</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>ChatGPT 信任背书</p></div>
+<div class="card card-top" style="border-color:var(--accent5);text-align:left;padding:34px;"><h3>05</h3><p>Viv 小品牌翻盘</p></div>
+<div class="card card-top" style="border-color:var(--accent4);text-align:left;padding:34px;"><h3>06</h3><p>Go Fish Digital 转化提升</p></div>
+</div>
 </section>
 
 <!-- Slide 09: source s7 -->
@@ -623,13 +676,6 @@ tr:last-child td{border-bottom:none}
 <div class="ft"></div><div class="fs">国内 GEO 案例</div>
 </section>
 
-<!-- Slide 10: source s8 -->
-<section class="slide quote" id="slide-10" data-source-id="s8">
-<div class="kicker kicker-d">海外市场</div>
-<h1>海外 AI 助手<br>已经是<em>十亿级入口</em></h1>
-<div class="sub" style="margin-top:48px;">Sensor Tower：ChatGPT 月活超过 11 亿，Gemini 约 6.62 亿，Claude 约 2.45 亿</div>
-</section>
-
 <!-- Slide 11: source s9 -->
 <section class="slide ct" id="slide-11" data-source-id="s9">
 <div class="kicker kicker-g">海外效果</div>
@@ -639,7 +685,7 @@ tr:last-child td{border-bottom:none}
 <div>
 <div style="margin-bottom:36px;"><div class="mn mg">+400%</div><div class="ml">小品牌 Viv 网站流量增长</div></div>
 <div style="margin-bottom:36px;"><div class="mn mr">25x</div><div class="ml">AI 客户转化率 vs 普通搜索流量</div></div>
-<div><div class="mn mg">3x</div><div class="ml">Go Fish Digital leads 翻倍</div></div>
+<div><div class="mn mg">+83.33%</div><div class="ml">Go Fish Digital AI 推荐来源转化提升</div></div>
 </div>
 <div style="display:flex;flex-direction:column;justify-content:center;">
 <p style="font-size:27px;color:var(--ink2);line-height:1.8;">用户问 AI 时，AI 先帮他筛掉大部分选择。如果你的品牌出现在答案里，客户点进来之前就已经带着“被推荐过”的信任感。</p>
@@ -677,10 +723,10 @@ tr:last-child td{border-bottom:none}
 <div class="sub">Go Fish Digital · 自己做实验，3 个月数据</div>
 <div class="split" style="grid-template-columns:.9fr 1.1fr;">
 <div>
-<div style="margin-bottom:36px;"><div class="mn mg">+43%</div><div class="ml">AI 来源流量</div></div>
-<div style="margin-bottom:36px;"><div class="mn mr" style="font-size:96px;">25x</div><div class="ml">转化率 vs 传统搜索</div></div>
-<div><div class="mn mg">3x</div><div class="ml">Leads 翻 3 倍</div></div>
-<div class="verdict" style="margin-top:36px;"><strong>原因：</strong>AI 在答案里先完成信任背书，点进来的用户更接近成交。</div>
+<div style="margin-bottom:24px;"><div class="mn mg" style="font-size:72px;">+43%</div><div class="ml">AI 来源流量</div></div>
+<div style="margin-bottom:24px;"><div class="mn mr" style="font-size:84px;">25x</div><div class="ml">转化率 vs 传统搜索</div></div>
+<div><div class="mn mg" style="font-size:72px;">+83.33%</div><div class="ml">AI referral 月转化提升</div></div>
+<div class="verdict" style="margin-top:24px;padding:22px 30px;font-size:25px;line-height:1.45;"><strong>原因：</strong>AI 在答案里先完成信任背书，点进来的用户更接近成交。</div>
 </div>
 <div>
 <img src="/geo-assets/evidence/gofish-geo-case-study.png" class="evidence-img" alt="Go Fish Digital GEO case study screenshot">
@@ -689,6 +735,20 @@ tr:last-child td{border-bottom:none}
 </div>
 </div>
 <div class="fs">海外 GEO 案例</div>
+</section>
+
+<!-- Chapter 04: 风险与未来：不做 GEO 会失去什么 -->
+<section class="slide cover" id="chapter-04" data-source-id="chapter-04">
+<div class="kicker kicker-r">章节 04</div>
+<h1 style="font-size:84px;">风险与未来：不做 GEO 会失去什么</h1>
+<div class="sub" style="margin-top:18px;">从微信 AI、竞品占位和信息污染讲紧迫性</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>微信 AI 连接交易场景</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>竞品占走 AI 答案</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>GEO 的核心结果</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>AI 黑稿攻击</p></div>
+<div class="card card-top" style="border-color:var(--accent5);text-align:left;padding:34px;"><h3>05</h3><p>错误数据污染模型</p></div>
+</div>
 </section>
 
 <!-- Slide 12: source s10 -->
@@ -750,17 +810,17 @@ tr:last-child td{border-bottom:none}
 <div class="sub">GEO 可以推广自己，也可以反过来攻击竞品</div>
 <div class="split" style="grid-template-columns:.95fr 1.05fr;">
 <div>
-<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">AI 工具 5 分钟批量生成黑稿</div><div class="item-d">70 万篇，全网阅读 8000 万</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">AI 工具批量生成黑稿</div><div class="item-d">70 余万篇，涉小米、蔚来、理想等多家车企</div></div></div>
 <div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">小米、蔚来、理想联合报案</div><div class="item-d">比亚迪李云飞："源头是竞争对手"</div></div></div>
-<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">网信办确认车企互相攻击</div><div class="item-d">清理 11 万条，关闭 3600 个账号</div></div></div>
+<div class="item"><div class="item-n" style="background:var(--accent);">!</div><div><div class="item-t">六部门专项整治汽车网络乱象</div><div class="item-d">国家网信办持续公开曝光多批典型案例</div></div></div>
 </div>
 <div style="display:flex;flex-direction:column;justify-content:center;">
 <div style="display:flex;gap:36px;margin-bottom:42px;">
-<div style="flex:1;"><div class="mn mr">11万</div><div class="ml">诋毁信息被清理</div></div>
-<div style="flex:1;"><div class="mn mr">3600</div><div class="ml">多个账号被关闭</div></div>
+<div style="flex:1;"><div class="mn mr">70余万</div><div class="ml">AI 黑稿被批量发布</div></div>
+<div style="flex:1;"><div class="mn mr">多批</div><div class="ml">汽车网络乱象典型案例被曝光</div></div>
 </div>
 <div class="verdict-r verdict"><strong>对企业的启示：</strong>AI 时代的品牌战，不只是你怎么介绍自己，也包括别人如何系统性污染你的信息源。</div>
-<p style="font-size:21px;color:var(--ink2);opacity:.6;margin-top:24px;">来源：央视《焦点访谈》2026.1 · 澎湃新闻</p>
+<p style="font-size:21px;color:var(--ink2);opacity:.6;margin-top:24px;">来源：央视《共同关注》2026.4；国家网信办等六部门汽车行业网络乱象专项整治</p>
 </div>
 </div>
 <div class="fs">GEO 攻击</div>
@@ -778,7 +838,22 @@ tr:last-child td{border-bottom:none}
 <div class="item"><div class="item-n" style="background:var(--accent);">4</div><div><div class="item-d" style="font-size:33px;">删了马上来新的，打地鼠一样</div></div></div>
 </div>
 <div class="verdict-r verdict" style="max-width:1050px;"><strong>结论：</strong>不做 GEO = 不只是错过机会，还可能被攻击</div>
-<div class="ft"></div><div class="fs">GEO 攻击 · 量子位 2026.3</div>
+<div class="ft"></div><div class="fs">GEO 攻击 · 315 曝光 / 量子位 2026.3</div>
+</section>
+
+<!-- Chapter 05: 方法论：AI 如何决定推荐谁 -->
+<section class="slide cover" id="chapter-05" data-source-id="chapter-05">
+<div class="kicker kicker-g">章节 05</div>
+<h1 style="font-size:84px;">方法论：AI 如何决定推荐谁</h1>
+<div class="sub" style="margin-top:18px;">拆开 AI 推荐逻辑，再反推 GEO 工作流</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>检索与生成</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>看得见 / 读得懂 / 信得过</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>高推荐率公式</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>四步项目流程</p></div>
+<div class="card card-top" style="border-color:var(--accent5);text-align:left;padding:34px;"><h3>05</h3><p>词库与诊断</p></div>
+<div class="card card-top" style="border-color:var(--accent4);text-align:left;padding:34px;"><h3>06</h3><p>内容标准与模板</p></div>
+</div>
 </section>
 
 <!-- Slide 15: source s13 -->
@@ -945,6 +1020,19 @@ tr:last-child td{border-bottom:none}
 <div class="verdict-r verdict" style="margin-top:30px;"><strong>教程里的核心判断：真实加结构，是 GEO 内容的两条命。</strong></div>
 </section>
 
+<!-- Chapter 06: 国内打法：平台生态与内容矩阵 -->
+<section class="slide cover" id="chapter-06" data-source-id="chapter-06">
+<div class="kicker kicker-g">章节 06</div>
+<h1 style="font-size:84px;">国内打法：平台生态与内容矩阵</h1>
+<div class="sub" style="margin-top:18px;">国内 GEO 的重点是按 AI 信息源反推平台</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>平台生态</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>6 类内容资产</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>30 天 / 90 天节奏</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>效果监控指标</p></div>
+</div>
+</section>
+
 <!-- Slide 24: source s19 -->
 <section class="slide ct" id="slide-24" data-source-id="s19">
 <div class="kicker kicker-g">国内 GEO</div>
@@ -1016,6 +1104,19 @@ tr:last-child td{border-bottom:none}
 <div class="verdict" style="max-width:1200px;margin-top:48px;"><strong>教程提醒：</strong>GEO 是动态博弈。你停下维护，竞争对手补内容，推荐位就会被抢走。</div>
 </section>
 
+<!-- Chapter 07: 海外打法：官网、技术与外部信号 -->
+<section class="slide cover" id="chapter-07" data-source-id="chapter-07">
+<div class="kicker kicker-d">章节 07</div>
+<h1 style="font-size:84px;">海外打法：官网、技术与外部信号</h1>
+<div class="sub" style="margin-top:18px;">海外 GEO 先把官网做成 AI 能理解的证据库</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>官网是主战场</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>技术底座</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>三类页面</p></div>
+<div class="card card-top" style="border-color:var(--ink);text-align:left;padding:34px;"><h3>04</h3><p>外部证据层</p></div>
+</div>
+</section>
+
 <!-- Slide 28: source s23 -->
 <section class="slide cover" id="slide-28" data-source-id="s23">
 <div class="kicker kicker-d">海外 GEO</div>
@@ -1059,6 +1160,18 @@ tr:last-child td{border-bottom:none}
 <div class="kicker kicker-d">海外分发</div>
 <h1 style="font-size:72px;">让品牌事实<br>出现在 AI <em>已经信任</em>的地方</h1>
 <div class="sub" style="margin-top:48px;max-width:1100px;">Wikipedia、Reddit、YouTube、PR、媒体评测、行业博客，都是海外 GEO 的外部证据层。</div>
+</section>
+
+<!-- Chapter 08: 避坑行动：识别骗局并立刻开始 -->
+<section class="slide cover" id="chapter-08" data-source-id="chapter-08">
+<div class="kicker kicker-r">章节 08</div>
+<h1 style="font-size:84px;">避坑行动：识别骗局并立刻开始</h1>
+<div class="sub" style="margin-top:18px;">最后把复杂问题收束成今天就能执行的动作</div>
+<div class="split3" style="max-width:1380px;margin-top:54px;gap:30px;align-items:stretch;">
+<div class="card card-top" style="border-color:var(--accent3);text-align:left;padding:34px;"><h3>01</h3><p>三句话识别 GEO 骗子</p></div>
+<div class="card card-top" style="border-color:var(--accent);text-align:left;padding:34px;"><h3>02</h3><p>30 分钟行动清单</p></div>
+<div class="card card-top" style="border-color:var(--accent2);text-align:left;padding:34px;"><h3>03</h3><p>总结：SEO + GEO 双入口</p></div>
+</div>
 </section>
 
 <!-- Slide 32: source s27 -->
